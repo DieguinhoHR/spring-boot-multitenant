@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/exemplo")
 public class ExemploController {
     @RequestMapping(value="/{nome}", method= RequestMethod.GET)
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    // @PreAuthorize("hasAnyRole('ADMIN')")
     public String exemplo(@PathVariable("nome") String nome) {
         return "Olá " + nome;
     }

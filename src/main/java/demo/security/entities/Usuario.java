@@ -14,8 +14,6 @@ public class Usuario implements Serializable {
     private String email;
     private String senha;
     private PerfilEnum perfil;
-    @Column(name = "tenant_id")
-    private int tenantId;
 
     public Usuario() {}
 
@@ -51,14 +49,6 @@ public class Usuario implements Serializable {
 
     public void setPerfil(PerfilEnum perfil) {
         this.perfil = perfil;
-    }
-
-    public int getTenantId() {
-        return tenantId;
-    }
-
-    public void setTenantId(int tenantId) {
-        this.tenantId = tenantId;
     }
 
     @Override

@@ -19,9 +19,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
 	private static final String AUTH_HEADER = "Authorization";
-	private static final String BEARER_PREFIX = "Bearer "; // Padrão utilizado usando as boas práticas do OAUTH
+	private static final String BEARER_PREFIX = "Bearer "; // Padrão utilizado usando as boas práticas do OAUTH2
 
-	//@Autowired
+	@Autowired
 	private UserDetailsService userDetailsService;
 
 	@Autowired
@@ -49,11 +49,11 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 			UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 
 			if (jwtTokenUtil.tokenValido(token)) {
-				// credenciais do usuário (deve passar o (tenant_id) aqui
-				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-						userDetails, null, userDetails.getAuthorities());
-				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-				SecurityContextHolder.getContext().setAuthentication(authentication);
+				UsernamePasswordAuthenticationToken authentication =
+						new UsernamePasswordAuthenticationToken(
+							userDetails, null, userDetails.getAuthorities());
+							authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+							SecurityContextHolder.getContext().setAuthentication(authentication);
 			}
 		}
 
