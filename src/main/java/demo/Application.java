@@ -10,6 +10,7 @@ import demo.security.repositories.UsuarioRepository;
 import demo.utils.SenhaUtils;
 import org.hibernate.MultiTenancyStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -103,14 +104,12 @@ public class Application {
             usuario.setEmail("usuario@gmail.com");
             usuario.setPerfil(PerfilEnum.ROLE_USUARIO);
             usuario.setSenha(SenhaUtils.gerarBCrypt("123456"));
-            usuario.setTenantId(1);
             this.usuarioRepository.save(usuario);
 
             Usuario admin = new Usuario();
             admin.setEmail("admin@gmail.com");
             admin.setPerfil(PerfilEnum.ROLE_ADMIN);
             admin.setSenha(SenhaUtils.gerarBCrypt("123456"));
-            admin.setTenantId(1);
             this.usuarioRepository.save(admin);
 
         };

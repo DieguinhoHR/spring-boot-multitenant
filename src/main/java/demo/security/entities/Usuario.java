@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-//@Table(name = "usuario")
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 306411570471828345L;
 
@@ -15,6 +14,7 @@ public class Usuario implements Serializable {
     private String email;
     private String senha;
     private PerfilEnum perfil;
+    @Column(name = "tenant_id")
     private int tenantId;
 
     public Usuario() {}

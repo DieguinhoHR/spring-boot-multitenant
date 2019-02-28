@@ -12,6 +12,7 @@ public class JwtUser implements UserDetails {
     private Long id;
     private String username;
     private String password;
+    private int tenantId;
     private Collection<? extends GrantedAuthority> authorities;
 
     public JwtUser(
@@ -53,6 +54,8 @@ public class JwtUser implements UserDetails {
     public String getPassword() {
         return password;
     }
+
+    public int getTenantId() { return tenantId; }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

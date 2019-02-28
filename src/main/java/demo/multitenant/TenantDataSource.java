@@ -36,7 +36,9 @@ public class TenantDataSource implements Serializable {
 
     public Map<String, DataSource> getAll() {
         List<DataSourceConfig> configList = configRepo.findAll();
+
         Map<String, DataSource> result = new HashMap<>();
+
         for (DataSourceConfig config : configList) {
             DataSource dataSource = getDataSource(config.getName());
             result.put(config.getName(), dataSource);
@@ -48,11 +50,14 @@ public class TenantDataSource implements Serializable {
         DataSourceConfig config = configRepo.findByName(name);
         if (config != null) {
             DataSourceBuilder factory = DataSourceBuilder
-                    .create().driverClassName(config.getDriverClassName())
+                    .create()
+                    .driverClassName(config.getDriverClassName())
                     .username(config.getUsername())
                     .password(config.getPassword())
                     .url(config.getUrl());
+
             DataSource ds = factory.build();
+
             if (config.getInitialize()) {
                 initialize(ds);
             }

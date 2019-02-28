@@ -51,7 +51,8 @@ public class AuthenticationController {
 	 */
 	@PostMapping
 	public ResponseEntity<Response<TokenDto>> gerarTokenJwt(
-			@Valid @RequestBody JwtAuthenticationDto
+			@Valid
+			@RequestBody JwtAuthenticationDto
 			authenticationDto,
 			BindingResult result) throws AuthenticationException {
 		Response<TokenDto> response = new Response<TokenDto>();
@@ -67,7 +68,10 @@ public class AuthenticationController {
 		log.info("Gerando token para o email {}.", authenticationDto.getEmail());
 
 		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(authenticationDto.getEmail(), authenticationDto.getSenha()));
+				new UsernamePasswordAuthenticationToken(
+						authenticationDto.getEmail(),
+						authenticationDto.getSenha()));
+
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationDto.getEmail());

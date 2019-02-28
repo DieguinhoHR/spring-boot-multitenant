@@ -5,6 +5,7 @@ CREATE TABLE DATASOURCECONFIG (
 	name VARCHAR(255),
 	username VARCHAR(255),
 	password VARCHAR(255),
+  tenantid INT(11),
 	initialize BOOLEAN
 );
 
@@ -17,6 +18,5 @@ CREATE TABLE USUARIO (
 	id IDENTITY PRIMARY KEY,
 	email VARCHAR(255),
 	senha VARCHAR(200),
-	perfil CHAR(1),
-	tenantid INT(11)
+	perfil CHAR(1)
 );
