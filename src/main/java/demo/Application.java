@@ -104,12 +104,14 @@ public class Application {
             usuario.setEmail("usuario@gmail.com");
             usuario.setPerfil(PerfilEnum.ROLE_USUARIO);
             usuario.setSenha(SenhaUtils.gerarBCrypt("123456"));
+            usuario.setTenantId("2");
             this.usuarioRepository.save(usuario);
 
             Usuario admin = new Usuario();
             admin.setEmail("admin@gmail.com");
             admin.setPerfil(PerfilEnum.ROLE_ADMIN);
             admin.setSenha(SenhaUtils.gerarBCrypt("123456"));
+            admin.setTenantId("2");
             this.usuarioRepository.save(admin);
 
         };

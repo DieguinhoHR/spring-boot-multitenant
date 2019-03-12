@@ -16,6 +16,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import static demo.multitenant.MultiTenantConstants.CURRENT_TENANT_IDENTIFIER;
+
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
 	private static final String AUTH_HEADER = "Authorization";
@@ -50,10 +52,13 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
 			if (jwtTokenUtil.tokenValido(token)) {
 				UsernamePasswordAuthenticationToken authentication =
-						new UsernamePasswordAuthenticationToken(
-							userDetails, null, userDetails.getAuthorities());
-							authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-							SecurityContextHolder.getContext().setAuthentication(authentication);
+						new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+				SecurityContextHolder.getContext().setAuthentication(authentication);
+
+				String tenantId = jwtTokenUtil.getTenantId(token);
+				request.setAttribute(CURRENT_TENANT_IDENTIFIER, tenantId);
+
 			}
 		}
 

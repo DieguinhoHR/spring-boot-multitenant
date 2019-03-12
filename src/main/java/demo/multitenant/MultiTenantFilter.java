@@ -18,14 +18,17 @@ public class MultiTenantFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {}
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+    public void doFilter(
+            ServletRequest servletRequest,
+            ServletResponse servletResponse,
+            FilterChain filterChain)
             throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) servletRequest;
-        if (req.getHeader(TENANT_KEY) != null) {
-            req.setAttribute(CURRENT_TENANT_IDENTIFIER, req.getHeader(TENANT_KEY));
-        } else {
-            req.setAttribute(CURRENT_TENANT_IDENTIFIER, DEFAULT_TENANT_ID);
-        }
+//        HttpServletRequest req = (HttpServletRequest) servletRequest;
+//        if (req.getHeader(TENANT_KEY) != null) {
+//            req.setAttribute(CURRENT_TENANT_IDENTIFIER, req.getHeader(TENANT_KEY));
+//        } else {
+//            req.setAttribute(CURRENT_TENANT_IDENTIFIER, DEFAULT_TENANT_ID);
+//        }
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

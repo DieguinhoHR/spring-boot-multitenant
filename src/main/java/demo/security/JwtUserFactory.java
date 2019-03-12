@@ -23,7 +23,8 @@ public class JwtUserFactory {
                 usuario.getId(),
                 usuario.getEmail(),
                 usuario.getSenha(),
-                mapToGrantedAuthorities(usuario.getPerfil()));
+                mapToGrantedAuthorities(usuario.getPerfil()),
+                usuario.getTenantId());
     }
 
     /**

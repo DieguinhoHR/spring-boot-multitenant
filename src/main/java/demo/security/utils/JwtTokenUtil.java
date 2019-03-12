@@ -1,6 +1,8 @@
 package demo.security.utils;
 
 import java.util.*;
+
+import demo.security.JwtUser;
 import io.jsonwebtoken.*;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +15,7 @@ public class JwtTokenUtil {
     static final String CLAIM_KEY_USERNAME = "sub"; // e-mail de quem está autenticando
     static final String CLAIM_KEY_ROLE = "role"; // perfil do usuário
     static final String CLAIM_KEY_CREATED = "created"; // definiçaõ de quando ele foi criado
+    static final String CLAIM_KEY_TENANT_ID = "tenantId";
 
     @Value("${jwt.secret}")
     private String secret;
@@ -89,11 +92,12 @@ public class JwtTokenUtil {
      * @return String
      */
     public String obterToken(UserDetails userDetails) {
+        if (!(userDetails instanceof JwtUser)) return null;
         Map<String, Object> claims = new HashMap<>();
         claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
         userDetails.getAuthorities().forEach(authority -> claims.put(CLAIM_KEY_ROLE, authority.getAuthority()));
         claims.put(CLAIM_KEY_CREATED, new Date());
-
+        claims.put(CLAIM_KEY_TENANT_ID, ((JwtUser)userDetails).getTenantId());
         return gerarToken(claims);
     }
 
@@ -148,4 +152,14 @@ public class JwtTokenUtil {
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
 
+    public String getTenantId(String token) {
+        String tenantId;
+        try {
+            Claims claims = getClaimsFromToken(token);
+            tenantId = claims.get(CLAIM_KEY_TENANT_ID, String.class);
+        } catch (Exception e) {
+            tenantId = null;
+        }
+        return tenantId;
+    }
 }

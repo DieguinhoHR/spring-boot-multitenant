@@ -13,16 +13,19 @@ public class JwtUser implements UserDetails {
     private String username;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
+    private String tenantId;
 
     public JwtUser(
             Long id,
             String username,
             String password,
-            Collection<? extends GrantedAuthority> authorities) {
+            Collection<? extends GrantedAuthority> authorities,
+            String tenantId) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.authorities = authorities;
+        this.tenantId = tenantId;
     }
 
     public Long getId() {
@@ -64,4 +67,7 @@ public class JwtUser implements UserDetails {
         return true;
     }
 
+    public String getTenantId() {
+        return tenantId;
+    }
 }
